@@ -190,7 +190,12 @@ def train_ssldistill(epoch, train_loader,utrain_loader, module_list, criterion_l
             f_s = module_list[1](f_s)
             f_t = feat_t[-2]
             logit_tc = model_t(x=None, feat_s=f_s, feat_t=f_t)
-            loss_kd = criterion_kd(f_s, f_t) * 10 + F.mse_loss(logit_tc, logit_t)
+            if opt.model_s=='ShuffleV1':
+                loss_kd = criterion_kd(f_s, f_t) * 10+ F.mse_loss(logit_tc, logit_t)
+            elif opt.model_s  in ['resnet8x4','wrn_40_1']:
+                oss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
+            else:
+                raise NotImplementedError
         elif opt.distill == 'attention':
             g_s = feat_s[1:-1]
             g_t = feat_t[1:-1]
@@ -322,4 +327,3 @@ def validate(val_loader, model, criterion, opt):
               .format(top1=top1, top5=top5))
 
     return top1.avg, top5.avg, losses.avg
-
