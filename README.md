@@ -18,7 +18,7 @@ This repo
 [OpenMatch](https://github.com/VisionLearningGroup/OP_Match).**
 
 ## Method
-<div style="text-align:center"><img src="http://jingyang2017.github.io/RepDistiller_SSL/overview.png" width="85%" height="85%"></div>
+<div style="text-align:center"><img src="http://jingyang2017.github.io/SRD_ossl/overview.png" width="85%" height="85%"></div>
 
 ## Requirements
 - Python>= 3.6
