@@ -15,7 +15,7 @@ This repo
 [FixMatch](https://github.com/kekmodel/FixMatch-pytorch),
 [MTCR](https://github.com/YU1ut/Multi-Task-Curriculum-Framework-for-Open-Set-SSL),
 [T2T](https://github.com/huangjk97/T2T),
-[OpenMatch](https://github.com/VisionLearningGroup/OP_Match).**
+[OpenMatch](https://github.com/VisionLearningGroup/OP_Match)).**
 
 ## Method
 <div style="text-align:center"><img src="./overview.png" width="85%" height="85%"></div>
