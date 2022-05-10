@@ -25,7 +25,7 @@ from distiller_zoo import DistillKL, HintLoss, Attention, Similarity, Correlatio
 from distiller_zoo import PKT, ABLoss, FactorTransfer, KDSVD, FSP, NSTLoss,CRDLoss
 
 from helper.loops import train_distill as train_bl
-from helper.loops import train_ssldistill as train_ssl
+from helper.loops import train_ssldistill2 as train_ssl
 
 from helper.loops import validate
 from helper.pretrain import init
@@ -307,7 +307,7 @@ def main():
         logging.info(msg)
 
     # This best accuracy is only for printing purpose.
-    # The results reported in the paper/README is from the last epoch. 
+    # The results reported in the paper/README is from the last epoch.
     print('best accuracy:', best_acc)
     state = {
         'opt': opt,
