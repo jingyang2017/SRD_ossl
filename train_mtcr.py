@@ -226,6 +226,7 @@ def domain_train(domain_trainloader, model, optimizer, use_cuda):
 
         logits = model(inputs, is_feat=True)[1]
         probs = torch.sigmoid(logits).view(-1)
+        print(logits.size())
         Ld = F.binary_cross_entropy_with_logits(logits, domain_labels.view(-1, 1))
         results[indexs.detach().numpy().tolist()] = probs.cpu().detach().numpy().tolist()
         loss = Ld
