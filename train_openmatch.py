@@ -141,7 +141,7 @@ def main():
     if args.seed is not None:
         set_seed(args)
 
-    train_loader, utrain_loader, test_loader, n_data = get_cifar100_dataloaders(batch_size=args.batch_size, num_workers=args.num_workers, is_instance=True, is_sample=False, ratio=1,ood=args.ood)
+    train_loader, utrain_loader, test_loader, n_data = get_cifar100_dataloaders(batch_size=args.batch_size, num_workers=args.num_workers, is_instance=True, is_sample=False,ood=args.ood)
 
     args.out = './Results/OP_MATCH/'+str(args.arch)+'_ood_'+str(args.ood)+'_amp_'+str(args.amp)
 

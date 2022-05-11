@@ -1,7 +1,6 @@
 '''
 code: https://github.com/iBelieveCJM/Tricks-of-Semi-supervisedDeepLeanring-Pytorch
 Follow CUDA_VISIBLE_DEVICES=$1 python main.py --dataset=cifar10 --sup-batch-size=100 --usp-batch-size=100 --label-exclude=False --num-labels=4000 --arch=cnn13 --model=ipslab2013v2 --usp-weight=1.0 --optim=sgd --epochs=400 --lr=0.1 --momentum=0.9 --weight-decay=5e-4 --nesterov=True --lr-scheduler=cos --min-lr=1e-4 --rampup-length=80 --rampdown-length=50 --data-idxs=False --save-freq=100 2>&1 | tee results/ipslab2013v2_cifar10-4k_$(date +%y-%m-%d-%H-%M).txt
-
 '''
 #!coding:utf-8
 from __future__ import print_function

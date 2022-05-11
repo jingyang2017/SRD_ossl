@@ -24,6 +24,8 @@ This repo
 - Python>= 3.6
 - PyTorch>=1.0.1
 - tensorboard
+- tensorboardX
+- tqdm
 - progress
 - matplotlib
 - numpy
