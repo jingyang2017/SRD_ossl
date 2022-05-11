@@ -13,7 +13,7 @@ import torch.backends.cudnn as cudnn
 import torch.optim as optim
 import torch.nn.functional as F
 from progress.bar import Bar as Bar
-from dataset.mtcf_data import get_cifar100
+from dataset.mtcr_data import get_cifar100
 from models import model_dict
 from helper.util import AverageMeter, accuracy
 from tensorboardX import SummaryWriter
@@ -55,7 +55,7 @@ parser.add_argument('--ema-decay', default=0.999, type=float)
 
 args = parser.parse_args()
 state = {k: v for k, v in args._get_kwargs()}
-args.out = './Results/MTCF/' + str(args.arch) + '_ood_' + str(args.ood)
+args.out = './Results/MTCR/' + str(args.arch) + '_ood_' + str(args.ood)
 os.makedirs(args.out, exist_ok=True)
 
 use_cuda = torch.cuda.is_available()
