@@ -148,7 +148,7 @@ def main():
         return model, rotnet_head, cmm_head
 
     ## use labeled transformer
-    train_loader, utrain_loader, test_loader, n_data = get_cifar100_dataloaders(batch_size=args.batch_size, num_workers=args.num_workers, is_instance=True, ood = args.ood_dataset,is_sample=False, ratio=1)
+    train_loader, utrain_loader, test_loader, n_data = get_cifar100_dataloaders(batch_size=args.batch_size, num_workers=args.num_workers, is_instance=True, ood = args.ood_dataset,is_sample=False)
     labeled_trainloader = train_loader
 
     ## fixmatch transformer

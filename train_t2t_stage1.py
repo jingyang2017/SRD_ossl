@@ -144,8 +144,7 @@ def main():
                                                                                 num_workers=args.num_workers,
                                                                                 is_instance=True,
                                                                                 is_sample=False,
-                                                                                ood = args.ood_dataset,
-                                                                                ratio=1)
+                                                                                ood = args.ood_dataset)
 
     # unlabeled_dataset contains all training data
     # however, it use randaugment as data transformation
@@ -231,7 +230,7 @@ def train_stage1(args, labeled_trainloader, unlabeled_trainloader, test_loader,
                 [torch.empty(inputs_u_w.size(0)).fill_(i).long() for i in range(4)], dim=0).to(args.device)
 
             data_time.update(time.time() - end)
-            
+
             batch_size = inputs_x.shape[0]
             inputs_x, targets_x = inputs_x.to(args.device), targets_x.to(args.device)
 
