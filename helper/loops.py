@@ -194,7 +194,7 @@ def train_ssldistill(epoch, train_loader,utrain_loader, module_list, criterion_l
             if opt.model_s=='ShuffleV1':
                 loss_kd = criterion_kd(f_s, f_t) * 10+ F.mse_loss(logit_tc, logit_t)
             elif opt.model_s  in ['resnet8x4','wrn_40_1']:
-                oss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
+                loss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
             else:
                 raise NotImplementedError
         elif opt.distill == 'attention':
@@ -351,7 +351,7 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
             if opt.model_s=='ShuffleV1':
                 loss_kd = criterion_kd(f_s, f_t) * 10+ F.mse_loss(logit_tc, logit_t)
             elif opt.model_s  in ['resnet8x4','wrn_40_1']:
-                oss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
+                loss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
             else:
                 raise NotImplementedError
         elif opt.distill == 'attention':
@@ -450,7 +450,7 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
             if opt.model_s=='ShuffleV1':
                 loss_kd = criterion_kd(f_s, f_t) * 10+ F.mse_loss(logit_tc, logit_t)
             elif opt.model_s  in ['resnet8x4','wrn_40_1']:
-                oss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
+                loss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
             else:
                 raise NotImplementedError
         elif opt.distill == 'attention':
