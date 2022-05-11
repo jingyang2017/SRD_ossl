@@ -130,8 +130,8 @@ def main():
     model = create_model(args=args, ema=False)
     ema_model = create_model(args=args, ema=True)
 
-    model = nn.DataParallel(model)
-    ema_model = nn.DataParallel(ema_model)
+    # model = nn.DataParallel(model)
+    # ema_model = nn.DataParallel(ema_model)
 
     cudnn.benchmark = True
     print('Total params: %.2fM' % (sum(p.numel() for p in model.parameters()) / 1000000.0))
