@@ -309,13 +309,13 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
     end = time.time()
     u_iter = iter(utrain_loader)
     for idx, data in enumerate(train_loader):
-        input, target, index = data
+        inputs, target, index = data
         data_time.update(time.time() - end)
 
-        input = input.float()
+        inputs = inputs.float()
 
         if torch.cuda.is_available():
-            input = input.cuda()
+            inputs = inputs.cuda()
             target = target.cuda()
             index = index.cuda()
 
@@ -324,9 +324,9 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
         if opt.distill in ['abound']:
             preact = True
 
-        feat_s, logit_s = model_s(input, is_feat=True, preact=preact)
+        feat_s, logit_s = model_s(inputs, is_feat=True, preact=preact)
         with torch.no_grad():
-            feat_t, logit_t = model_t(input, is_feat=True, preact=preact)
+            feat_t, logit_t = model_t(inputs, is_feat=True, preact=preact)
             feat_t = [f.detach() for f in feat_t]
 
         # cls for labeled
@@ -418,7 +418,7 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
             u_iter = iter(utrain_loader)
             data = next(u_iter)
 
-        (input_u1, input_u2), index = data
+        (input_u1, _), index = data
         data_time.update(time.time() - end)
         input_u1 = input_u1.float()
         # input_u2 = input_u2.float()
@@ -526,7 +526,7 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
 
     print(' * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'.format(top1=top1, top5=top5))
     return top1.avg, losses.avg
-    
+
 def validate(val_loader, model, criterion, opt):
     """validation"""
     batch_time = AverageMeter()
