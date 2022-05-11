@@ -281,7 +281,6 @@ def train_ssldistill(epoch, train_loader,utrain_loader, module_list, criterion_l
     return top1.avg, losses.avg
 
 
-
 def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_list, optimizer, opt):
     """One epoch distillation"""
     # set modules as train()
@@ -525,10 +524,9 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
                 data_time=data_time, loss=losses, top1=top1, top5=top5))
             sys.stdout.flush()
 
-    print(' * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'
-          .format(top1=top1, top5=top5))
-
+    print(' * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'.format(top1=top1, top5=top5))
     return top1.avg, losses.avg
+    
 def validate(val_loader, model, criterion, opt):
     """validation"""
     batch_time = AverageMeter()
