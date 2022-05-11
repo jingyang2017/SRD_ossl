@@ -287,8 +287,6 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
     # set modules as train()
     for module in module_list:
         module.train()
-    # set teacher as eval()
-    module_list[-1].eval()
 
     if opt.distill == 'abound':
         module_list[1].eval()
@@ -301,6 +299,7 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
 
     model_s = module_list[0]
     model_t = module_list[-1]
+    model_t = model_t.eval()
 
     batch_time = AverageMeter()
     data_time = AverageMeter()
@@ -315,6 +314,7 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
         data_time.update(time.time() - end)
 
         input = input.float()
+
         if torch.cuda.is_available():
             input = input.cuda()
             target = target.cuda()
@@ -330,8 +330,10 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
             feat_t, logit_t = model_t(input, is_feat=True, preact=preact)
             feat_t = [f.detach() for f in feat_t]
 
-        # cls + kl div
+        # cls for labeled
         loss_cls = criterion_cls(logit_s, target)
+
+        # kl for labeled
         loss_div = criterion_div(logit_s, logit_t)
 
         # other kd beyond KL divergence
@@ -341,16 +343,17 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
             f_s = module_list[1](feat_s[opt.hint_layer])
             f_t = feat_t[opt.hint_layer]
             loss_kd = criterion_kd(f_s, f_t)
-        elif opt.distill == 'crdssl':
-            f_s = feat_s[-1]
-            f_t = feat_t[-1]
-            loss_kd = criterion_kd(f_s, f_t, index, contrast_idx)
-        elif opt.distill in ['srd']:
+        elif opt.distill == 'srd':
             f_s = feat_s[-2]
             f_s = module_list[1](f_s)
             f_t = feat_t[-2]
             logit_tc = model_t(x=None, feat_s=f_s, feat_t=f_t)
-            loss_kd = criterion_kd(f_s, f_t)*10  + F.mse_loss(logit_tc, logit_t)
+            if opt.model_s=='ShuffleV1':
+                loss_kd = criterion_kd(f_s, f_t) * 10+ F.mse_loss(logit_tc, logit_t)
+            elif opt.model_s  in ['resnet8x4','wrn_40_1']:
+                oss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
+            else:
+                raise NotImplementedError
         elif opt.distill == 'attention':
             g_s = feat_s[1:-1]
             g_t = feat_t[1:-1]
@@ -419,16 +422,17 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
         (input_u1, input_u2), index = data
         data_time.update(time.time() - end)
         input_u1 = input_u1.float()
-        input_u2 = input_u2.float()
+        # input_u2 = input_u2.float()
         if torch.cuda.is_available():
             input_u1 = input_u1.cuda()
-            input_u2 = input_u2.cuda()
+            # input_u2 = input_u2.cuda()
             index = index.cuda()
         # ===================forward=====================
         feat_s, logit_s = model_s(input_u1, is_feat=True, preact=preact)
         with torch.no_grad():
             feat_t, logit_tu = model_t(input_u1, is_feat=True, preact=preact)
             feat_t = [f.detach() for f in feat_t]
+
         #kl div
         loss_div = criterion_div(logit_s, logit_tu)
         # other kd beyond KL divergence
@@ -438,17 +442,17 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
             f_s = module_list[1](feat_s[opt.hint_layer])
             f_t = feat_t[opt.hint_layer]
             loss_kd = criterion_kd(f_s, f_t)
-        elif opt.distill == 'crdssl':
-            # loss_kd = loss_div
-            f_s = feat_s[-1]
-            f_t = feat_t[-1]
-            loss_kd = criterion_kd(f_s, f_t, index,unlabeled=True)
-        elif opt.distill in ['srd']:
+        elif opt.distill == 'srd':
             f_s = feat_s[-2]
             f_s = module_list[1](f_s)
             f_t = feat_t[-2]
             logit_tc = model_t(x=None, feat_s=f_s, feat_t=f_t)
-            loss_kd = criterion_kd(f_s, f_t)*10  + F.mse_loss(logit_tc, logit_tu)
+            if opt.model_s=='ShuffleV1':
+                loss_kd = criterion_kd(f_s, f_t) * 10+ F.mse_loss(logit_tc, logit_t)
+            elif opt.model_s  in ['resnet8x4','wrn_40_1']:
+                oss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
+            else:
+                raise NotImplementedError
         elif opt.distill == 'attention':
             g_s = feat_s[1:-1]
             g_t = feat_t[1:-1]

@@ -26,6 +26,7 @@ from distiller_zoo import PKT, ABLoss, FactorTransfer, KDSVD, FSP, NSTLoss,CRDLo
 
 from helper.loops import train_distill as train_bl
 from helper.loops import train_ssldistill as train_ssl
+from helper.loops import train_ssldistill2 as train_ssl2
 
 from helper.loops import validate
 from helper.pretrain import init
@@ -35,7 +36,7 @@ from utils.utils import get_teacher_name, load_teacher, init_logging
 def parse_option():
 
     parser = argparse.ArgumentParser('argument for training')
-
+    parser.add_argument('--v2', action='store_true')
     parser.add_argument('--print_freq', type=int, default=100, help='print frequency')
     parser.add_argument('--tb_freq', type=int, default=500, help='tb frequency')
     parser.add_argument('--save_freq', type=int, default=40, help='save frequency')
@@ -88,7 +89,7 @@ def parse_option():
         opt.learning_rate = 0.01
 
     # set the path according to the environment
-    opt.model_path = './Results/save_kdssl/student_model'
+    opt.model_path = './Results/kdssl_%s/student_model'%str(opt.v2)
 
     iterations = opt.lr_decay_epochs.split(',')
     opt.lr_decay_epochs = list([])
@@ -279,7 +280,10 @@ def main():
         if opt.distill == 'crd':
             train_acc, train_loss = train_bl(epoch, train_loader, module_list, criterion_list, optimizer, opt)
         else:
-            train_acc, train_loss = train_ssl(epoch, train_loader, utrain_loader, module_list, criterion_list,optimizer, opt)
+            if opt.v2:
+                train_acc, train_loss = train_ssl2(epoch, train_loader, utrain_loader, module_list, criterion_list,optimizer, opt)
+            else:
+                train_acc, train_loss = train_ssl(epoch, train_loader, utrain_loader, module_list, criterion_list,optimizer, opt)
 
         time2 = time.time()
         print('epoch {}, total time {:.2f}'.format(epoch, time2 - time1))

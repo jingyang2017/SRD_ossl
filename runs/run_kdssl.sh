@@ -4,7 +4,6 @@ python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.p
 python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --model_s wrn_40_1 --distill kd -r 0.1 -a 0.9 -b 0 --ood tin
 # crd
 python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth  --model_s wrn_40_1  --distill crd -a 0 -b 0.8 --ood tin
-
 # FitNet
 python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill hint  --model_s wrn_40_1 -a 0 -b 100 --ood tin
 # AT
@@ -27,5 +26,3 @@ python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.p
 python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill fsp --model_s wrn_40_1 -a 0 -b 50 --ood tin
 # NST
 python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill nst --model_s wrn_40_1 -a 0 -b 50 --ood tin
-
-
