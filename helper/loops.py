@@ -406,7 +406,7 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
         loss = opt.gamma * loss_cls + opt.alpha * loss_div + opt.beta * loss_kd
 
         acc1, acc5 = accuracy(logit_s, target, topk=(1, 5))
-        losses.update(loss.item(), input.size(0))
+        losses.update(loss.item(), inputs.size(0))
         top1.update(acc1[0], input.size(0))
         top5.update(acc5[0], input.size(0))
 
