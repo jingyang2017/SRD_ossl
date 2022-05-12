@@ -35,8 +35,8 @@ def get_data_folder():
     if hostname.startswith('jd4615'):
         data_folder = '/media/jd4615/dataB/Datasets/classification/'
     else:
-        # put your dataset here
-        data_folder = ''
+        #TODO put your dataset here
+        data_folder = '/fsx/jinang/Datasets/classification/'
 
     if not os.path.isdir(data_folder):
         os.makedirs(data_folder)

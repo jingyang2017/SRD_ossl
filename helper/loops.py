@@ -419,7 +419,6 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
         top5.update(acc5[0], input.size(0))
 
         # ==================unlabeled data================
-
         try:
             data = next(u_iter)
         except:
