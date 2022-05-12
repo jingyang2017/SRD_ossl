@@ -100,9 +100,9 @@ def parse_option():
 
     opt.model_t = get_teacher_name(opt.path_t)
 
-    opt.model_name = 'O:{}S:{}_T:{}_{}_{}_r:{}_a:{}_b:{}_{}'.format(opt.ood, opt.model_s, opt.model_t, opt.dataset,
+    opt.model_name = 'O:{}S:{}_T:{}_{}_{}_r:{}_a:{}_b:{}e:{}_{}'.format(opt.ood, opt.model_s, opt.model_t, opt.dataset,
                                                                     opt.distill, opt.gamma, opt.alpha, opt.beta,
-                                                           str(time.ctime()))
+                                                           str(os.environ['CONDA_DEFAULT_ENV']),str(time.ctime()))
     opt.save_folder = os.path.join(opt.model_path, opt.model_name)
     os.makedirs(opt.save_folder, exist_ok=True)
     print(opt.save_folder)
