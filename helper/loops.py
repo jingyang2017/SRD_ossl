@@ -197,6 +197,14 @@ def train_ssldistill(epoch, train_loader,utrain_loader, module_list, criterion_l
                 loss_kd = criterion_kd(f_s, f_t)+ F.mse_loss(logit_tc, logit_t)
             else:
                 raise NotImplementedError
+
+        elif opt.distill == 'srdv2':
+            f_s = feat_s[-2]
+            f_s = module_list[1](f_s)
+            f_t = feat_t[-2]
+            logit_tc = model_t(x=None, feat_s=f_s, feat_t=f_t)
+            loss_kd = criterion_kd(f_s, f_t) * 10+ F.mse_loss(logit_tc, logit_t)
+
         elif opt.distill == 'attention':
             g_s = feat_s[1:-1]
             g_t = feat_t[1:-1]
@@ -415,13 +423,11 @@ def train_ssldistill2(epoch, train_loader,utrain_loader, module_list, criterion_
             u_iter = iter(utrain_loader)
             data = next(u_iter)
 
-        (input_u1, input_u2), index = data
+        (input_u1, _), index = data
         data_time.update(time.time() - end)
         input_u1 = input_u1.float()
-        input_u2 = input_u2.float()
         if torch.cuda.is_available():
             input_u1 = input_u1.cuda()
-            input_u2 = input_u2.cuda()
             index = index.cuda()
         # ===================forward=====================
         feat_s, logit_s = model_s(input_u1, is_feat=True, preact=preact)

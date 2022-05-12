@@ -173,7 +173,7 @@ def main():
         module_list.append(criterion_kd.embed_t)
         trainable_list.append(criterion_kd.embed_s)
         trainable_list.append(criterion_kd.embed_t)
-    elif opt.distill == 'srd':
+    elif 'srd' in opt.distill:
         opt.s_dim = feat_s[-2].shape[1]
         opt.t_dim = feat_t[-2].shape[1]
         connector = transfer_conv(opt.s_dim, opt.t_dim)
