@@ -15,7 +15,6 @@ class transfer_conv(nn.Module):
             nn.Conv2d(in_feature, out_feature, kernel_size=1, stride=1, padding=0, bias=False),
             nn.BatchNorm2d(out_feature),
             nn.ReLU())
-
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
@@ -29,12 +28,10 @@ class transfer_conv(nn.Module):
 
 
 class statm_loss(nn.Module):
-    def __init__(self, eps=2):
+    def __init__(self):
         super(statm_loss, self).__init__()
-        self.eps = eps
 
     def forward(self,x, y):
-        # same as channel_batchMSE
         x = x.view(x.size(0),x.size(1),-1)
         y = y.view(y.size(0),y.size(1),-1)
         x_mean = x.mean(dim=2)#BC

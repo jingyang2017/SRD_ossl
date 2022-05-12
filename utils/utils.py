@@ -21,10 +21,6 @@ def load_teacher(model_path, n_cls):
     print('==> done')
     return model
 
-
-
-
-
 def init_logging(log_root, models_root):
     log_root.setLevel(logging.INFO)
     formatter = logging.Formatter("Training: %(asctime)s-%(message)s")

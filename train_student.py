@@ -36,7 +36,7 @@ from utils.utils import get_teacher_name, load_teacher, init_logging
 def parse_option():
 
     parser = argparse.ArgumentParser('argument for training')
-    parser.add_argument('--v2', action='store_true')
+    parser.add_argument('--v2', action='store_true',help='seperate batch or not')
     parser.add_argument('--print_freq', type=int, default=100, help='print frequency')
     parser.add_argument('--tb_freq', type=int, default=500, help='tb frequency')
     parser.add_argument('--save_freq', type=int, default=40, help='save frequency')
@@ -45,6 +45,11 @@ def parse_option():
     parser.add_argument('--epochs', type=int, default=240, help='number of training epochs')
     parser.add_argument('--init_epochs', type=int, default=30, help='init training for two-stage methods')
 
+    # labeled dataset
+    parser.add_argument('--dataset', type=str, default='cifar100', choices=['cifar100'], help='dataset')
+
+
+    # select unlabeled dataset
     parser.add_argument('--ood', type=str, default='tin', choices=['tin', 'places', 'None'])
 
     # optimization
@@ -53,9 +58,6 @@ def parse_option():
     parser.add_argument('--lr_decay_rate', type=float, default=0.1, help='decay rate for learning rate')
     parser.add_argument('--weight_decay', type=float, default=5e-4, help='weight decay')
     parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
-
-    # dataset
-    parser.add_argument('--dataset', type=str, default='cifar100', choices=['cifar100'], help='dataset')
 
     # model
     parser.add_argument('--model_s', type=str, default='wrn_40_1',
@@ -100,7 +102,7 @@ def parse_option():
 
     opt.model_name = 'O:{}S:{}_T:{}_{}_{}_r:{}_a:{}_b:{}_{}'.format(opt.ood, opt.model_s, opt.model_t, opt.dataset,
                                                                     opt.distill, opt.gamma, opt.alpha, opt.beta,
-                                                                    str(time.ctime()))
+                                                           str(time.ctime()))
     opt.save_folder = os.path.join(opt.model_path, opt.model_name)
     os.makedirs(opt.save_folder, exist_ok=True)
     print(opt.save_folder)
@@ -178,6 +180,7 @@ def main():
         opt.t_dim = feat_t[-2].shape[1]
         connector = transfer_conv(opt.s_dim, opt.t_dim)
         module_list.append(connector)
+        # add this because connector need to to updated
         trainable_list.append(connector)
         criterion_kd = statm_loss()
     elif opt.distill == 'attention':
@@ -251,7 +254,7 @@ def main():
     criterion_list = nn.ModuleList([])
     criterion_list.append(criterion_cls)  # classification loss
     criterion_list.append(criterion_div)  # KL divergence loss, original knowledge distillation
-    criterion_list.append(criterion_kd)  # other knowledge distillation loss
+    criterion_list.append(criterion_kd)   # other knowledge distillation loss
 
     # optimizer
     optimizer = optim.SGD(trainable_list.parameters(),
@@ -281,8 +284,10 @@ def main():
             train_acc, train_loss = train_bl(epoch, train_loader, module_list, criterion_list, optimizer, opt)
         else:
             if opt.v2:
+                # in seperate batch
                 train_acc, train_loss = train_ssl2(epoch, train_loader, utrain_loader, module_list, criterion_list,optimizer, opt)
             else:
+                # in same batch
                 train_acc, train_loss = train_ssl(epoch, train_loader, utrain_loader, module_list, criterion_list,optimizer, opt)
 
         time2 = time.time()
