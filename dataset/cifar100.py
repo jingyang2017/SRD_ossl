@@ -258,7 +258,7 @@ def get_cifar100_dataloaders(batch_size=128, num_workers=8,
 
     tiny_transform = transforms.Compose([
         transforms.Resize(32),
-        transforms.RandomCrop(32, padding=4),
+        transforms.RandomCrop(32, padding=4), # TODO
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize(cifar100_mean, cifar100_std),
