@@ -1,7 +1,6 @@
 # srd
-# python train_student.py --path_t ./save/models/resnet32x4_vanilla/ckpt_epoch_240.pth --model_s resnet8x4 --distill srd -a 0 -b 1 --ood tin --v2
+python train_student.py --path_t ./save/models/resnet32x4_vanilla/ckpt_epoch_240.pth --model_s resnet8x4 --distill srd -a 0 -b 1 --ood tin --v2
 # kd
-python train_student.py --path_t ./save/models/resnet32x4_vanilla/ckpt_epoch_240.pth --model_s resnet8x4 --distill kd -r 0.1 -a 0.9 -b 0 --ood tin --v2
 python train_student.py --path_t ./save/models/resnet32x4_vanilla/ckpt_epoch_240.pth --model_s resnet8x4 --distill kd -r 0.1 -a 0.9 -b 0 --ood tin --v2
 # crd
 #python train_student.py --path_t ./save/models/resnet32x4_vanilla/ckpt_epoch_240.pth  --model_s resnet8x4  --distill crd -a 0 -b 0.8 --ood tin
