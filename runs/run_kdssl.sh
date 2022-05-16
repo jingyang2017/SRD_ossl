@@ -17,7 +17,7 @@ python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.p
 # RKD
 python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill rkd --model_s wrn_40_1 -a 0 -b 1 --ood tin
 # PKT
-python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill pkt --model_s wrn_40_1 -a 0 -b 30000 --ood tin
+python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill pkt --model_s wrn_40_1 -a 0 -b 30000 --ood tin --v2
 # AB
 python train_student.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill abound --model_s wrn_40_1 -a 0 -b 1 --ood tin
 # FT

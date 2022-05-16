@@ -7,6 +7,7 @@ import torchvision.datasets as datasets
 class ImageFolderInstance(datasets.ImageFolder):
     """: Folder datasets which returns the index of the image as well::
     """
+
     def __getitem__(self, index):
         """
         Args:
@@ -16,7 +17,8 @@ class ImageFolderInstance(datasets.ImageFolder):
         """
         path, target = self.imgs[index]
         img = self.loader(path)
-        return self.transform(img),self.target_transform(img),index
+        return self.transform(img), self.target_transform(img), index
+
 
 class TransformTwice:
     def __init__(self, transform):
@@ -27,6 +29,7 @@ class TransformTwice:
         out2 = self.transform(inp)
         return out1, out2
 
+
 def get_data_folder():
     """
     return server-dependent path to store the data
@@ -35,8 +38,8 @@ def get_data_folder():
     if hostname.startswith('jd4615'):
         data_folder = '/media/jd4615/dataB/Datasets/classification/'
     else:
-        #TODO put your dataset here
-        data_folder = '/fsx/jinang/Datasets/classification/'
+        # TODO put your dataset here
+        raise ValueError(f'folder is not given')
 
     if not os.path.isdir(data_folder):
         os.makedirs(data_folder)

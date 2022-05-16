@@ -13,7 +13,6 @@ from PIL import Image
 
 torch.backends.cudnn.benchmark = True
 
-
 class TIN_loader(torch.utils.data.Dataset):
     def __init__(self, data_folder, transform):
         self.transform = transform
