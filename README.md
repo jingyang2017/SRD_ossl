@@ -1,4 +1,4 @@
-##  Knowledge Distillation Meets Open-Set Semi-Supervised Learning
+##  [Knowledge Distillation Meets Open-Set Semi-Supervised Learning](https://arxiv.org/pdf/2205.06701.pdf)
 The implementation is based on the open-source benchmark [RepDistiller](https://github.com/HobbitLong/RepDistiller).
 
 This repo
