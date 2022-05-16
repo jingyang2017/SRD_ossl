@@ -284,10 +284,10 @@ def main():
             train_acc, train_loss = train_bl(epoch, train_loader, module_list, criterion_list, optimizer, opt)
         else:
             if opt.v2:
-                # in seperate batch
+                # in the seperate batch
                 train_acc, train_loss = train_ssl2(epoch, train_loader, utrain_loader, module_list, criterion_list,optimizer, opt)
             else:
-                # in same batch
+                # in the same batch
                 train_acc, train_loss = train_ssl(epoch, train_loader, utrain_loader, module_list, criterion_list,optimizer, opt)
 
         time2 = time.time()
