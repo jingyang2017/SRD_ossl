@@ -51,7 +51,6 @@ This repo
 3. Run semi-supervised by following commands in `scripts/run_ssl.sh`.
 
 ## Citation
-If you use this work helpful, please cite our paper
 ```
 @article{yang2022srd,
     title={Knowledge Distillation Meets Open-Set Semi-Supervised Learning},
@@ -60,3 +59,7 @@ If you use this work helpful, please cite our paper
     year={2022}
 }
 ```
+## license
+This project is licensed under the MIT License
+
+
