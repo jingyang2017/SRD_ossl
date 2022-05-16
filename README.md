@@ -46,9 +46,9 @@ This repo
     ```
    which will download and save the models to `save/models`
 
-2. Run distillation by following commands in `scripts/run_kd_distill.sh`.
+2. Run distillation by following commands in `runs/run_kd_distill.sh`.
 
-3. Run semi-supervised by following commands in `scripts/run_ssl.sh`.
+3. Run semi-supervised by following commands in `runs/run_ssl.sh`.
 
 ## Citation
 ```
