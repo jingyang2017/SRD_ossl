@@ -49,3 +49,14 @@ This repo
 2. Run distillation by following commands in `scripts/run_kd_distill.sh`.
 
 3. Run semi-supervised by following commands in `scripts/run_ssl.sh`.
+
+## Citation
+If you use this work helpful, please cite our paper
+```
+@article{yang2022srd,
+    title={Knowledge Distillation Meets Open-Set Semi-Supervised Learning},
+    author={Jing Yang, Xiatian Zhu, Adrian Bulat, Brais Martinez, Georgios Tzimiropoulos},
+    journal={arXiv preprint arXiv:2205.06701},
+    year={2022}
+}
+```
